@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700;800&family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+    --clairvoy-bg-color: #050505;
+    --clairvoy-text-primary: rgba(255, 255, 255, 0.9);
+    --clairvoy-text-secondary: rgba(255, 255, 255, 0.7);
+    --clairvoy-accent-copper: #C05A3E; /* Forged Copper Metal */
+    --clairvoy-accent-crimson: #B21A27; /* Ancient Magic Crimson / Crimson-tinted steel */
+    --clairvoy-accent-cyan: #06B6D4; /* Ethereal Digital Energy */
+    --clairvoy-accent-teal: #0D9488; /* Data processing / futuristic core */
+    --clairvoy-accent-gold: #D4AF37; /* Forged Gold / Alchemy */
+    --clairvoy-nav-bg: rgba(5, 5, 5, 0.85);
+}
+
+/* Global Reset overrides to prevent white edges & overscroll bounce on this route */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--clairvoy-bg-color);
+    overscroll-behavior: none; /* Prevents white rubber-band bouncing on Mac/Trackpads */
+}  
+
+.clairvoy-page {
+    background-color: var(--clairvoy-bg-color);
+    color: var(--clairvoy-text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    /* Textured cinematic black background with a subtle digital vignette */
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.03) 0%, rgba(178, 26, 39, 0.02) 40%, #050505 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* --- NAVIGATION --- */
+.clairvoy-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: var(--clairvoy-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: opacity 0.5s ease;
+}
+
+.clairvoy-hidden-nav {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.clairvoy-visible-nav {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.clairvoy-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.clairvoy-nav-logo {
+    font-family: 'Crimson Pro', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--clairvoy-accent-gold);
+    text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+}
+
+.clairvoy-nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.clairvoy-nav-links a {
+    color: var(--clairvoy-text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.clairvoy-nav-links a:hover {
+    color: var(--clairvoy-text-primary);
+}
+
+.clairvoy-btn-gradient {
+    /* Forged metal and elemental fire gradient */
+    background: linear-gradient(135deg, var(--clairvoy-accent-crimson), var(--clairvoy-accent-copper));
+    color: #fff;
+    /* Crimson-tinted steel border */
+    border: 1px solid rgba(178, 26, 39, 0.5);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: box-shadow 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
+    /* Elemental smoke and fire lens flare glow */
+    box-shadow: 0 0 15px rgba(178, 26, 39, 0.5), inset 0 0 10px rgba(192, 90, 62, 0.4);
+}
+
+.clairvoy-btn-gradient:hover {
+    box-shadow: 0 0 25px rgba(192, 90, 62, 0.8), inset 0 0 15px rgba(212, 175, 55, 0.5);
+    transform: translateY(-1px);
+    border-color: var(--clairvoy-accent-gold);
+}
+
+/* --- CANVAS & LAYOUT --- */
+.clairvoy-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0; /* Changed from -1 so it stays behind component but over EPIK bg if any */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.clairvoy-canvas-container canvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.clairvoy-scroll-wrapper {
+    position: relative;
+    z-index: 10;
+}
+
+/* --- SECTIONS --- */
+.clairvoy-step {
+    height: 150vh;
+    width: 100%;
+    position: relative;
+}
+
+/* Section Text Locations */
+.clairvoy-content-center,
+.clairvoy-content-left,
+.clairvoy-content-right {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 0 5%;
+}
+
+.clairvoy-content-center {
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.clairvoy-content-left {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 500px;
+    margin-right: auto;
+    margin-left: 10%;
+}
+
+.clairvoy-content-right {
+    align-items: flex-end;
+    text-align: right;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: 10%;
+}
+
+/* --- TYPOGRAPHY & EFFECTS --- */
+.clairvoy-headline {
+    font-family: 'Crimson Pro', serif;
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(185, 28, 28, 0.5); /* Crimson glow */
+    background: linear-gradient(to right, var(--clairvoy-text-primary), var(--clairvoy-accent-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.clairvoy-subheadline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--clairvoy-accent-cyan);
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 15px rgba(6, 182, 212, 0.4);
+    text-transform: uppercase;
+}
+
+.clairvoy-body-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--clairvoy-text-secondary);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.clairvoy-info-block {
+    margin-top: 2rem;
+    background: rgba(20, 10, 10, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-left: 2px solid var(--clairvoy-accent-cyan);
+    padding: 1.5rem;
+    border-radius: 0 4px 4px 0;
+    border-top: 1px solid rgba(6, 182, 212, 0.1);
+    box-shadow: inset 2px 0 10px rgba(6, 182, 212, 0.1);
+}
+
+.clairvoy-content-right .clairvoy-info-block {
+    border-left: none;
+    border-right: 2px solid var(--clairvoy-accent-cyan);
+    border-radius: 4px 0 0 4px;
+    text-align: right;
+    box-shadow: inset -2px 0 10px rgba(6, 182, 212, 0.1);
+}
+
+.clairvoy-list-style {
+    list-style: none;
+    padding-left: 0;
+}
+.clairvoy-list-style li {
+    margin-bottom: 1rem;
+}
+
+/* CTA */
+.clairvoy-cta-group {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.clairvoy-btn-gradient-lg {
+    background: linear-gradient(135deg, var(--clairvoy-accent-crimson), var(--clairvoy-accent-copper));
+    color: #fff;
+    border: 1px solid rgba(178, 26, 39, 0.6);
+    padding: 1.2rem 3rem;
+    border-radius: 4px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: box-shadow 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
+    box-shadow: 0 0 25px rgba(178, 26, 39, 0.5), inset 0 0 15px rgba(192, 90, 62, 0.4);
+}
+.clairvoy-btn-gradient-lg:hover {
+    box-shadow: 0 0 40px rgba(192, 90, 62, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.5);
+    transform: translateY(-2px);
+    border-color: var(--clairvoy-accent-gold);
+}
+
+.clairvoy-text-link {
+    color: var(--clairvoy-text-secondary);
+    text-decoration: none;
+    font-size: 1rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+.clairvoy-text-link:hover {
+    color: var(--clairvoy-accent-cyan);
+    border-bottom: 1px solid var(--clairvoy-accent-cyan);
+}
+
+/* --- FADE EFFECTS JS CLASSES --- */
+.clairvoy-fade-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.clairvoy-fade-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .clairvoy-headline { font-size: 2.5rem; }
+    .clairvoy-subheadline { font-size: 1.3rem; }
+    .clairvoy-content-left, .clairvoy-content-right {
+        margin: 0 auto;
+        text-align: center;
+        padding: 0 1rem;
+    }
+    .clairvoy-info-block {
+        border-left: 2px solid var(--clairvoy-accent-cyan);
+        border-right: none;
+        border-radius: 8px;
+        text-align: left;
+    }
+    .clairvoy-content-right .clairvoy-info-block {
+        text-align: left;
+    }
+    .clairvoy-nav-links { display: none; }
+}

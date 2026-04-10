@@ -1,0 +1,25 @@
+# Antigravity Global Context Directives
+
+As Antigravity, before starting any task or writing any code, ALWAYS read the contents of the `.ai/` directory in the project root to establish persistent context. 
+
+Strict Requirements:
+1. **Initial Review**: Start your session by checking `.ai/TASKS.md` and `.ai/plans/PLAN.md`.
+2. **Execute and Update**: When creating checklists, planning, or executing tasks, mirror your state by updating `.ai/TASKS.md`.
+3. **Log History**: Upon completing a major feature, write a brief summary of the completed work to `.ai/memory/TASKS_LOG.md` and update `.ai/memory/PLANS_LOG.md` respectively.
+4. **Planning**: Instead of relying *only* on private internal artifacts (`C:\Users\ahmed\.gemini\antigravity\brain\...`), ensure you actively summarize technical implementation plans into `.ai/plans/PLAN.md`. 
+
+5. **OBLIGATORY UI/UX & SHADCN WORKFLOW**: Each and every time you work on frontend UI tasks, it is STRICTLY OBLIGATORY to perform the following steps *before* writing any code:
+   - First, run the `ui-ux-pro-max` skill (`python .agent/skills/ui-ux-pro-max/scripts/search.py "<keywords>" --design-system`) to fetch architectural patterns and persist a Master design system.
+   - Second, you MUST use `shadcn` MCP tools and CLI commands (executed from the `shadcn/` subdirectory) to structurally build the components based on those UX recommendations. You may not bypass these utilities to manually scaffold UI from scratch unless specifically requested.
+6. **Esoteric Brand Constraint - ClairvoyAI**: The UI must consistently adhere to the "Clairvoyance meets Computing" theme. 
+   - **Concept & Motif**: The AI represents magical, omniscient foresight. The central motif is the "All-Seeing Eye" inside a compass rose—an ancient esoteric shell hiding a hyper-advanced, quantum-like technological brain with floating spheres/rings.
+   - **Aesthetics & Textures**: Dark and cinematic (deep textured black `#050505` backgrounds). Emphasize elemental energy (billowing fire, smoke, lens flares) contrasted with cold, precise, floating geometry.
+   - **Materiality**: Use forged metals (copper, bronze, crimson-tinted steel) to ground the design in tangible, ancient aesthetics. Avoid sleek modern plastic/glass.
+   - **Color Palette**: 
+     - *Ancient Magic*: Crimson, Copper, and Gold for typography, text, and fiery reveals/highlights (alchemy, power).
+     - *Digital Energy*: Ethereal Cyan/Teal for circuitry, computational data boundaries, and geometric cores (energy, data processing).
+   - **Typography**: Classical, elegant, swooping fonts (reminiscent of dark academia/gothic fantasy) like "Crimson Pro" for primary magical headers, and precise, computational fonts like "Inter" for secondary data mapping.
+   - **Unobstructed Layout Constraints**: The central motif (the Eye or computational core) is paramount. Textual arrays, layout cards, and UI components MUST ALWAYS be pushed to the viewport's far edges (utilizing margin locks or absolute top/bottom anchoring). You must NEVER allow text blocks to structurally overlap or obscure the center focal plane.
+7. **Shadcn UI Management (MANDATORY)**: As stated above, Shadcn usage is obligatory. The Next.js/Shadcn UI project resides in the `shadcn/` subdirectory. You MUST always query the `shadcn` MCP server to find correct integrations, and you MUST guarantee your `cwd` is `shadcn/` when running component installations.
+
+These rules apply to this specific workspace (`clairvoyai`) permanently.
