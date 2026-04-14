@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
-import { Crimson_Pro, Inter } from "next/font/google";
+import { Orbitron, Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({
+const orbitron = Orbitron({
   subsets: ["latin"],
-  variable: "--font-sans"
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-orbitron",
 });
 
-const crimsonPro = Crimson_Pro({
-  weight: ["400", "500", "600", "700"],
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-crimson-pro"
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-space-mono",
 });
 
 export const metadata: Metadata = {
-  title: "ClairvoyAI - The Convergence of Omniscience and Computation",
-  description: "ClairvoyAI Hackathon: An esoteric AI event forged by Atuariel. Hack the future.",
+  title: "ClairvoyAI — Omniscience & Computation",
+  description: "ClairvoyAI by AI Atuariel: Where actuarial intelligence meets computational vision. Hack the future.",
 };
 
 export default function RootLayout({
@@ -29,9 +36,10 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-full flex flex-col antialiased dark bg-background text-foreground",
-          inter.variable,
-          crimsonPro.variable,
-          "font-sans"
+          orbitron.variable,
+          spaceGrotesk.variable,
+          spaceMono.variable,
+          "font-[family-name:var(--font-space-grotesk)]"
         )}
       >
         {children}

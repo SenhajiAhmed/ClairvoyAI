@@ -13,17 +13,17 @@ export default function ClairvoyAIPage() {
     const observerOptions = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.3,
+      threshold: 0.15,
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("opacity-100", "translate-y-0");
-          entry.target.classList.remove("opacity-0", "translate-y-[30px]");
+          entry.target.classList.add("opacity-100", "translate-y-0", "scale-100");
+          entry.target.classList.remove("opacity-0", "translate-y-[40px]", "scale-95");
         } else {
-          entry.target.classList.add("opacity-0", "translate-y-[30px]");
-          entry.target.classList.remove("opacity-100", "translate-y-0");
+          entry.target.classList.add("opacity-0", "translate-y-[40px]", "scale-95");
+          entry.target.classList.remove("opacity-100", "translate-y-0", "scale-100");
         }
       });
     }, observerOptions);
@@ -36,70 +36,126 @@ export default function ClairvoyAIPage() {
     };
   }, []);
 
-  const fadeBase = "clairvoy-fade-text opacity-0 translate-y-[30px] transition-all duration-700 ease-out";
+  const fadeBase = "clairvoy-fade-text opacity-0 translate-y-[40px] scale-95 transition-all duration-[1200ms] ease-out";
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen bg-background relative hud-grid">
+      {/* Background radial gradient to add depth behind the canvas */}
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-950/20 via-background to-background -z-10 pointer-events-none"></div>
+
       <Navbar />
+      
+      {/* Render the 3D Eye Animation Layer underneath the text sections */}
       <EyeCanvas />
 
-      <main className="relative z-10">
-        {/* Step 1 */}
-        <section className="h-[150vh] w-full relative" id="overview">
-          <div className="sticky top-0 h-screen flex flex-col justify-end w-full px-[5%] items-center text-center max-w-[800px] mx-auto pb-32">
-            <h1 className={cn("font-crimson-pro text-5xl md:text-[4.5rem] font-bold tracking-tight mb-4 leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-primary-foreground to-amber-500 drop-shadow-[0_4px_20px_rgba(185,28,28,0.5)]", fadeBase)}>
-              ClairvoyAI Hackathon
-            </h1>
-            <h2 className={cn("font-sans text-xl md:text-2xl text-accent mb-8 uppercase tracking-wider drop-shadow-[0_2px_15px_rgba(6,182,212,0.4)]", fadeBase)}>
-              The Convergence of Omniscience and Computation.
-            </h2>
-            <p className={cn("font-sans text-lg md:text-xl text-muted-foreground drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]", fadeBase)}>
-              Behold the All-Seeing Eye—an entity possessing magical foresight and a complex computational brain.
-            </p>
+      <main className="relative w-full z-10 selection:bg-cyan-500/30 selection:text-cyan-50">
+        
+        {/* Step 1 - Hero strictly anchored to bottom-left */}
+        <section className="h-[200vh] w-full relative" id="overview">
+          <div className="sticky top-0 h-screen w-full flex flex-col justify-end items-start pointer-events-none px-6 md:px-12 xl:px-24 pb-20 md:pb-32">
+            <div className={cn("pointer-events-auto relative z-10 text-left max-w-[600px]", fadeBase)}>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-8 h-[2px] bg-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,1)]" />
+                <span className="font-mono text-xs md:text-sm text-cyan-400 uppercase tracking-[0.4em] font-bold drop-shadow-[0_0_5px_rgba(6,182,212,0.8)]">System Online</span>
+              </div>
+
+              <h2 className="font-sans text-lg md:text-2xl text-slate-300 font-light tracking-[0.1em] border-l-2 border-indigo-500 pl-4 ml-1">
+                Omniscience & Computation Core
+              </h2>
+            </div>
           </div>
         </section>
 
-        {/* Step 2 */}
-        <EsotericPanel id="intelligence" title="Ancient Esoteric Form." alignment="left">
-          <p>A rune-like shell of forged metals—copper, bronze, and crimson-tinted steel.</p>
-          <p>Revealing itself through organic alchemy: billowing fire, elemental smoke, and intense lens flares.</p>
-          <p>Encased within a classical multi-pointed star compass rose representing truth and omniscient observation.</p>
+        {/* Step 2 - Right anchored */}
+        <EsotericPanel 
+          id="intelligence" 
+          title="Neural Telemetry." 
+          subtitle="// MODULE 01: OBSERVATION"
+          alignment="right"
+        >
+          <div className="flex flex-col gap-4 font-mono text-sm tracking-wide">
+            <p className="text-cyan-300">
+              <span className="text-indigo-400 font-bold pr-2">&gt;</span>
+              High-bandwidth data-filtration nodes actively scanning global streams.
+            </p>
+            <p>
+              <span className="text-indigo-400 font-bold pr-2">&gt;</span>
+              Precision-engineered quantum pathways forging deep-learning structures.
+            </p>
+            <p>
+              <span className="text-indigo-400 font-bold pr-2">&gt;</span>
+              Optimized for perpetual computation endurance & architectural scale.
+            </p>
+          </div>
         </EsotericPanel>
 
-        {/* Step 3 */}
-        <EsotericPanel id="adaptability" title="Exploded Transformation." alignment="right">
-          <ul className="list-none space-y-3 font-sans">
-            <li>The ancient exterior breaks apart to uncover a glowing, crystalline core.</li>
-            <li>Ethereal cyan energy mapping out floating spheres and rotating quantum rings.</li>
-            <li>An ancient exterior hiding a hyper-advanced technological brain.</li>
+        {/* Step 3 - Left anchored */}
+        <EsotericPanel 
+          id="adaptability" 
+          title="Actuarial Matrix." 
+          subtitle="// MODULE 02: ANALYSIS"
+          alignment="left"
+        >
+          <ul className="list-none space-y-5 font-sans relative">
+            {/* High-tech list styling */}
+            <div className="absolute left-1.5 top-2 bottom-2 w-px bg-gradient-to-b from-cyan-500/50 via-indigo-500/50 to-transparent"></div>
+            <li className="relative pl-8">
+              <div className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-cyan-400 bg-background shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+              <span className="text-white font-medium">Distributed Multi-Node Processing</span>
+              <p className="text-sm mt-1 text-slate-400">Synchronized logic gates executing millions of parallel probabilities.</p>
+            </li>
+            <li className="relative pl-8">
+              <div className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-cyan-400 bg-background shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+              <span className="text-white font-medium">Ethereal Data Mapping</span>
+              <p className="text-sm mt-1 text-slate-400">Translating chaotic variables into crystalline geometric forecasts.</p>
+            </li>
           </ul>
         </EsotericPanel>
 
-        {/* Step 4 */}
-        <EsotericPanel id="vision" title="Clairvoyance meets Computing." alignment="left">
-          <p>Ethereal teal circuitry processing infinite actuarial data streams with pure logic.</p>
-          <p>Contrasting raw alchemical fire with cold, precise, floating geometry.</p>
-        </EsotericPanel>
-
-        {/* Step 5 - CTA */}
-        <section className="h-[150vh] w-full relative" id="register">
-          <div className="sticky top-0 h-screen flex flex-col justify-end w-full px-[5%] items-center text-center max-w-[800px] mx-auto pb-24">
-            <h2 className={cn("font-crimson-pro text-5xl md:text-[4.5rem] font-bold tracking-tight mb-4 leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-primary-foreground to-amber-500 drop-shadow-[0_4px_20px_rgba(185,28,28,0.5)]", fadeBase)}>
-              Transcend. Code. Evolve.
-            </h2>
-            <p className={cn("font-sans text-xl md:text-2xl text-accent mb-12 uppercase tracking-wider", fadeBase)}>
-              Join the ultimate Actuarial AI ecosystem.
-            </p>
-            <div className={cn("flex flex-col items-center gap-6", fadeBase)}>
-              <Button
-                size="lg"
-                className="bg-gradient-to-br from-primary to-secondary px-12 py-8 text-2xl text-white font-crimson-pro font-semibold border-border border transition-all duration-300 ease-out hover:border-amber-500 hover:-translate-y-[2px] hover:shadow-[0_0_40px_rgba(192,90,62,0.8),inset_0_0_20px_rgba(212,175,55,0.5)] shadow-[0_0_25px_rgba(178,26,39,0.5),inset_0_0_15px_rgba(192,90,62,0.4)]"
-              >
-                Register for ClairvoyAI
-              </Button>
-              <a href="#" className="font-sans text-muted-foreground hover:text-accent border-b border-transparent hover:border-accent transition-all duration-300 pb-1">
-                See the Ancient Grimoire (Rules)
-              </a>
+        {/* Step 4 - Right anchored CTA */}
+        <section className="h-[200vh] w-full relative" id="register">
+          <div className="sticky top-0 h-screen w-full flex flex-col justify-end items-end pointer-events-none px-6 md:px-12 xl:px-24 pb-20 md:pb-32">
+            
+            <div className={cn("pointer-events-auto glass-panel border-indigo-accent p-10 md:p-14 w-full max-w-[600px] relative z-20 text-right group", fadeBase)}>
+              
+              {/* Ethereal Ambient Orb inside card */}
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-indigo-500/20 transition-colors duration-1000 -z-10" />
+              
+              <div className="flex flex-col items-end relative z-10 w-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="font-mono text-sm text-cyan-400 uppercase tracking-[0.4em] font-bold">Terminal Access Grants</span>
+                  <span className="w-8 h-[2px] bg-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,1)]" />
+                </div>
+                
+                <h2 className="font-heading text-4xl md:text-6xl font-black tracking-widest mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-l from-cyan-300 to-indigo-100 drop-shadow-[0_0_20px_rgba(6,182,212,0.6)] neon-pulse pb-2">
+                  TRANSCEND<br/>CODE.
+                </h2>
+                
+                <p className="font-sans text-base md:text-lg text-slate-300 mb-10 max-w-md">
+                  Join the actuarial ecosystem. Synthesize foresight with absolute computation.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-end gap-6 w-full">
+                  <a href="#" className="font-mono text-xs text-indigo-300 hover:text-cyan-300 transition-colors duration-300 uppercase tracking-[0.2em] relative before:absolute before:-bottom-1 before:left-0 before:w-full before:h-px before:bg-indigo-300/50 hover:before:bg-cyan-300 before:transition-colors">
+                    Consult Grimoire.SYS
+                  </a>
+                  
+                  <Button
+                    size="lg"
+                    className="relative overflow-hidden group/btn bg-primary/20 backdrop-blur-md px-10 py-8 text-lg text-white font-heading font-black tracking-widest border border-cyan-500/50 transition-all duration-500 ease-out hover:border-cyan-300 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] shadow-[0_0_20px_rgba(124,58,237,0.4)] w-full sm:w-auto min-w-[240px]"
+                  >
+                    <span className="relative z-10 uppercase flex items-center justify-center gap-3">
+                      Initiate Link
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right group-hover/btn:translate-x-2 transition-transform duration-300"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </span>
+                    <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -translate-x-[150%] skew-x-[30deg] group-hover/btn:animate-[glimmer_2s_infinite_ease-in-out]" />
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Corner decor */}
+              <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyan-500/50 m-4"></div>
+              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-indigo-500/50 m-4"></div>
             </div>
           </div>
         </section>

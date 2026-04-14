@@ -7,35 +7,58 @@ import { cn } from "@/lib/utils";
 interface EsotericPanelProps {
   id: string;
   title: string;
+  subtitle?: string;
   alignment: 'left' | 'right';
   children: React.ReactNode;
 }
 
-export default function EsotericPanel({ id, title, alignment, children }: EsotericPanelProps) {
-  const fadeBase = "clairvoy-fade-text opacity-0 translate-y-[30px] transition-all duration-700 ease-out";
+export default function EsotericPanel({ id, title, subtitle, alignment, children }: EsotericPanelProps) {
+  const fadeBase = "clairvoy-fade-text opacity-0 translate-y-[40px] transition-all duration-1000 ease-out";
   
   const isLeft = alignment === 'left';
 
+  // Strongly anchor to the extreme edges to prevent obscuring the central canvas
   const containerClasses = cn(
-    "sticky top-0 h-screen flex flex-col justify-center w-full px-[5%] mx-auto max-w-[400px]",
-    isLeft ? "items-start text-left md:ml-[5%] text-center md:text-left" : "items-end text-right md:mr-[5%] md:ml-auto text-center md:text-right"
+    "sticky top-0 h-screen w-full flex flex-col justify-center pointer-events-none px-6 md:px-12 xl:px-24",
+    isLeft ? "items-start text-left" : "items-end text-right"
   );
 
   const cardBorderClasses = isLeft 
-    ? "border-l-[3px] border-l-accent border-y-0 border-r-0 md:rounded-r-md md:rounded-l-none shadow-[inset_2px_0_10px_rgba(6,182,212,0.1)]"
-    : "border-r-[3px] border-r-accent border-y-0 border-l-0 md:rounded-l-md md:rounded-r-none shadow-[inset_-2px_0_10px_rgba(6,182,212,0.1)]";
+    ? "border-cyan-accent md:rounded-r-xl"
+    : "border-indigo-accent md:rounded-l-xl";
 
   return (
-    <section className="h-[150vh] w-full relative" id={id}>
+    <section className="h-[200vh] w-full relative" id={id}>
       <div className={containerClasses}>
-        <h2 className={cn("font-crimson-pro text-4xl md:text-[4.5rem] font-bold tracking-tight mb-4 leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-primary-foreground to-amber-500 drop-shadow-[0_4px_20px_rgba(185,28,28,0.5)]", fadeBase)}>
-          {title}
-        </h2>
-        <Card className={cn("bg-card/80 backdrop-blur-xl border-t border-t-accent/10 mt-8 rounded-lg", cardBorderClasses, fadeBase)}>
-          <CardContent className="p-6 flex flex-col gap-3 font-sans text-lg text-muted-foreground drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            {children}
-          </CardContent>
-        </Card>
+        
+        {/* Maximum constraints on width so it stays strictly in the corners */}
+        <div className="pointer-events-auto max-w-[450px] w-full flex flex-col gap-6 relative">
+          
+          {/* Ambient background glow behind the text */}
+          <div className={cn(
+            "absolute top-1/2 -translate-y-1/2 w-[150%] h-[150%] rounded-full blur-[100px] -z-10 opacity-30 pointer-events-none",
+            isLeft ? "-left-1/2 bg-cyan-600/40" : "-right-1/2 bg-indigo-600/40"
+          )} />
+
+          <div className={fadeBase}>
+            {subtitle && (
+              <p className="font-mono text-xs md:text-sm text-cyan-400 uppercase tracking-[0.3em] mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">
+                {subtitle}
+              </p>
+            )}
+            <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-wider leading-[1.15] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-200 to-indigo-300 drop-shadow-[0_0_15px_rgba(124,58,237,0.4)] neon-pulse">
+              {title}
+            </h2>
+          </div>
+
+          <div className={cn("glass-panel glimmer-effect mt-2 overflow-hidden", cardBorderClasses, fadeBase)}>
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-500/0 via-cyan-400/50 to-cyan-500/0"></div>
+            <CardContent className="relative z-10 p-8 flex flex-col gap-4 font-sans text-base md:text-lg text-slate-300 drop-shadow-md leading-relaxed">
+              {children}
+            </CardContent>
+          </div>
+          
+        </div>
       </div>
     </section>
   );

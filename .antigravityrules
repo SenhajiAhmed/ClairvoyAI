@@ -20,6 +20,7 @@ Strict Requirements:
      - *Digital Energy*: Ethereal Cyan/Teal for circuitry, computational data boundaries, and geometric cores (energy, data processing).
    - **Typography**: Classical, elegant, swooping fonts (reminiscent of dark academia/gothic fantasy) like "Crimson Pro" for primary magical headers, and precise, computational fonts like "Inter" for secondary data mapping.
    - **Unobstructed Layout Constraints**: The central motif (the Eye or computational core) is paramount. Textual arrays, layout cards, and UI components MUST ALWAYS be pushed to the viewport's far edges (utilizing margin locks or absolute top/bottom anchoring). You must NEVER allow text blocks to structurally overlap or obscure the center focal plane.
+   - **Glassmorphism Synthesis**: ALL headers, text frames, and UI containers overlapping or surrounding internal 3D backdrops MUST be encased in severe frosted glass overlays (e.g. `backdrop-blur-3xl`, `bg-black/20`, subtle semi-transparent `border-white/10`). This ensures digital and physical assets organically bleed into one cohesive "one good show" visual.
 7. **Shadcn UI Management (MANDATORY)**: As stated above, Shadcn usage is obligatory. The Next.js/Shadcn UI project resides in the `shadcn/` subdirectory. You MUST always query the `shadcn` MCP server to find correct integrations, and you MUST guarantee your `cwd` is `shadcn/` when running component installations.
 
 These rules apply to this specific workspace (`clairvoyai`) permanently.

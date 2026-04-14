@@ -9,7 +9,9 @@
 - [x] Shadcn Migration: Initialize Shadcn components (`button`, `card`) in `shadcn/`.
 - [x] Shadcn Migration: Update `layout.tsx` for fonts and `globals.css` for esoteric color themes.
 - [x] Shadcn Migration: Rewrite `page.tsx` integrating shadcn components.
-- [ ] Refactor Architecture: Extract layout `Navbar.tsx`.
-- [ ] Refactor Architecture: Isolate `EyeCanvas.tsx`.
-- [ ] Refactor Architecture: Abstract `EsotericPanel.tsx`.
-- [ ] Refactor Architecture: Consolidate `page.tsx`.
+- [x] Refactor Architecture: Extract layout `Navbar.tsx`.
+- [x] Refactor Architecture: Isolate `EyeCanvas.tsx`.
+- [x] Refactor Architecture: Abstract `EsotericPanel.tsx`.
+- [x] Refactor Architecture: Consolidate `page.tsx`.
+- [ ] Glassmorphism FX: Implement `.glimmer-effect` and `elemental-pulse`.
+- [ ] Glassmorphism FX: Apply profound `backdrop-blur` UI wrappers to Page intros.

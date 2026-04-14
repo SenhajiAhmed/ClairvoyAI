@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+  --font-heading: var(--font-orbitron);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -18,11 +18,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -45,7 +40,9 @@
   --radius-xl: calc(var(--radius) * 1.4);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --font-orbitron: var(--font-orbitron);
+  --font-space-grotesk: var(--font-space-grotesk);
+  --font-space-mono: var(--font-space-mono);
 }
 
 :root {
@@ -67,11 +64,6 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -84,31 +76,37 @@
 }
 
 .dark {
-  --background: #050505;
-  --foreground: #F8FAFC;
-  --card: rgba(10, 10, 10, 0.6);
-  --card-foreground: #ffffff;
-  --popover: #050505;
-  --popover-foreground: #ffffff;
-  --primary: #B21A27; /* Crimson */
+  /* ── Deep Space Tech/Actuarial Palette ── */
+  --background: #010208;           /* Deep space black */
+  --foreground: #E2E8F0;           /* Pale silver */
+  --card: rgba(4, 8, 20, 0.55);
+  --card-foreground: #E2E8F0;
+  --popover: #010208;
+  --popover-foreground: #E2E8F0;
+
+  --primary: #7C3AED;              /* Electric Indigo – AI / tech power */
   --primary-foreground: #ffffff;
-  --secondary: #C05A3E; /* Copper */
+  --secondary: #0EA5E9;            /* Electric Sky Blue – data streams */
   --secondary-foreground: #ffffff;
-  --accent: #0D9488; /* Teal */
+  --accent: #06B6D4;               /* Cyan – circuitry / computation */
   --accent-foreground: #ffffff;
-  --muted: #1E293B;
-  --muted-foreground: rgba(255, 255, 255, 0.7);
-  --destructive: #B91C1C;
-  --border: rgba(6, 182, 212, 0.2);
-  --input: rgba(192, 90, 62, 0.2);
-  --ring: #06B6D4; /* Cyan */
-  --sidebar: #050505;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #B21A27;
+
+  --gold: #F59E0B;                 /* Amber – actuarial precision */
+
+  --muted: #0D1117;
+  --muted-foreground: rgba(148, 163, 184, 0.85);
+  --destructive: #EF4444;
+  --border: rgba(6, 182, 212, 0.18);
+  --input: rgba(124, 58, 237, 0.2);
+  --ring: #06B6D4;
+
+  --sidebar: #010208;
+  --sidebar-foreground: #E2E8F0;
+  --sidebar-primary: #7C3AED;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #0D9488;
+  --sidebar-accent: #06B6D4;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(6, 182, 212, 0.2);
+  --sidebar-border: rgba(6, 182, 212, 0.18);
   --sidebar-ring: #06B6D4;
 }
 
@@ -116,10 +114,115 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
   }
-  html {
-    @apply font-sans;
+}
+
+/* ── Custom Utility Classes ── */
+@layer utilities {
+
+  /* Futuristic HUD grid overlay */
+  .hud-grid {
+    background-image:
+      linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
+
+  /* Heavy frosted glass panels */
+  .glass-panel {
+    background: rgba(4, 8, 20, 0.45);
+    backdrop-filter: blur(28px) saturate(1.4);
+    -webkit-backdrop-filter: blur(28px) saturate(1.4);
+    border: 1px solid rgba(6, 182, 212, 0.12);
+    border-radius: 1rem;
+    box-shadow: 0 0 60px rgba(124, 58, 237, 0.08), 0 4px 40px rgba(0,0,0,0.5);
+  }
+
+  /* Glimmer sweep on hover */
+  .glimmer-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  .glimmer-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to right, transparent, rgba(6, 182, 212, 0.07), transparent);
+    transform: rotate(30deg);
+    animation: glimmer 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Indigo neon pulse for headings */
+  .neon-pulse {
+    animation: neon-pulse 3.5s ease-in-out infinite alternate;
+  }
+
+  /* Data-scan line effect */
+  .data-scan {
+    position: relative;
+    overflow: hidden;
+  }
+  .data-scan::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.15), transparent);
+    animation: scan 4s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Cyan left border accent */
+  .border-cyan-accent {
+    border-left: 2px solid rgba(6, 182, 212, 0.7);
+    box-shadow: inset 3px 0 12px rgba(6, 182, 212, 0.1);
+  }
+
+  /* Indigo right border accent */
+  .border-indigo-accent {
+    border-right: 2px solid rgba(124, 58, 237, 0.7);
+    box-shadow: inset -3px 0 12px rgba(124, 58, 237, 0.1);
+  }
+}
+
+/* ── Keyframe Animations ── */
+@keyframes glimmer {
+  0%   { transform: translateX(-150%) rotate(30deg); }
+  30%  { transform: translateX(150%)  rotate(30deg); }
+  100% { transform: translateX(150%)  rotate(30deg); }
+}
+
+@keyframes neon-pulse {
+  0%   { text-shadow: 0 0 8px rgba(124,58,237,0.3), 0 0 20px rgba(6,182,212,0.12); }
+  100% { text-shadow: 0 0 20px rgba(124,58,237,0.9), 0 0 50px rgba(6,182,212,0.45), 0 0 80px rgba(14,165,233,0.2); }
+}
+
+@keyframes scan {
+  0%   { left: -60%; }
+  100% { left: 160%; }
+}
+
+@keyframes float-glow {
+  0%, 100% { transform: translateY(0px);   opacity: 0.6; }
+  50%       { transform: translateY(-8px);  opacity: 1;   }
+}
+
+@keyframes border-flow {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
 }
