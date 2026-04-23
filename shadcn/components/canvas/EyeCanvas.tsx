@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 export default function EyeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameCount = 240;
-  
+
   // Cache HTMLImageElements to draw synchronously
   const imagesCache = useRef<HTMLImageElement[]>([]);
   // Start with opacity 0 to prevent flashing before first frame loads
@@ -20,7 +20,7 @@ export default function EyeCanvas() {
       for (let i = 1; i <= frameCount; i++) {
         const img = new Image();
         // Decode off main thread to prevent UI stutter/jank while scrolling
-        img.decoding = "async"; 
+        img.decoding = "async";
         img.src = currentFrame(i);
         imagesCache.current[i] = img; // 1-indexed based on frames
       }
@@ -30,7 +30,7 @@ export default function EyeCanvas() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     // Performance optimization: alpha: false allows GPU to ignore transparency layer
     const context = canvas.getContext("2d", { alpha: false });
     if (!context) return;
@@ -65,7 +65,7 @@ export default function EyeCanvas() {
     const renderLoop = () => {
       // Lerp smoothing factor. 0.08 offers a buttery "easing" follow to the mouse wheel.
       currentRenderFrame += (targetFrame - currentRenderFrame) * 0.08;
-      
+
       const nextFrame = Math.max(1, Math.min(frameCount, Math.round(currentRenderFrame)));
 
       // Huge performance boost: only re-paint when the frame actually changes
@@ -106,7 +106,7 @@ export default function EyeCanvas() {
   }, []);
 
   return (
-    <div 
+    <div
       className={`fixed top-0 left-0 w-full h-screen z-0 flex justify-center items-center pointer-events-none transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
     >
       <canvas ref={canvasRef} className="w-full h-full object-cover"></canvas>
