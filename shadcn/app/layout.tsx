@@ -35,7 +35,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-full flex flex-col antialiased dark bg-background text-foreground",
+          "min-h-full flex flex-col antialiased dark bg-background text-foreground overflow-x-hidden",
           orbitron.variable,
           spaceGrotesk.variable,
           spaceMono.variable,

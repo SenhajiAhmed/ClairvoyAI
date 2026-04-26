@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 export default function EyeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameCount = 240;
+  const frameCount = 480;
 
   // Cache HTMLImageElements to draw synchronously
   const imagesCache = useRef<HTMLImageElement[]>([]);
@@ -35,8 +35,7 @@ export default function EyeCanvas() {
     const context = canvas.getContext("2d", { alpha: false });
     if (!context) return;
 
-    canvas.width = 1920;
-    canvas.height = 1080;
+    // Size will be set from actual image dimensions once the first frame loads
 
     let targetFrame = 1;
     let currentRenderFrame = 1;
@@ -47,7 +46,7 @@ export default function EyeCanvas() {
       const img = imagesCache.current[index];
       // Draw synchronously if already loaded
       if (img && img.complete && img.naturalHeight !== 0) {
-        context.drawImage(img, 0, 0);
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
         return true;
       }
       return false;
@@ -55,16 +54,22 @@ export default function EyeCanvas() {
 
     // Attempt to quickly draw initial frame once it loads to show the canvas
     const initInterval = setInterval(() => {
-      if (drawFrame(1)) {
-        setIsLoaded(true);
-        lastDrawnFrame = 1;
-        clearInterval(initInterval);
+      const img = imagesCache.current[1];
+      if (img && img.complete && img.naturalHeight !== 0) {
+        // Match canvas internal resolution to the actual image so no quality is lost
+        canvas.width = img.naturalWidth || 1920;
+        canvas.height = img.naturalHeight || 1080;
+        if (drawFrame(1)) {
+          setIsLoaded(true);
+          lastDrawnFrame = 1;
+          clearInterval(initInterval);
+        }
       }
     }, 50);
 
     const renderLoop = () => {
-      // Lerp smoothing factor. 0.08 offers a buttery "easing" follow to the mouse wheel.
-      currentRenderFrame += (targetFrame - currentRenderFrame) * 0.08;
+      // Lerp smoothing factor. 0.14 = responsive & smooth without feeling laggy.
+      currentRenderFrame += (targetFrame - currentRenderFrame) * 0.14;
 
       const nextFrame = Math.max(1, Math.min(frameCount, Math.round(currentRenderFrame)));
 
@@ -90,9 +95,9 @@ export default function EyeCanvas() {
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 
       if (maxScroll > 0) {
-        const scrollFraction = scrollTop / maxScroll;
-        const index = Math.min(frameCount - 1, Math.floor(scrollFraction * frameCount));
-        targetFrame = index + 1;
+        const scrollFraction = Math.min(1, scrollTop / maxScroll);
+        // Map 0–100% scroll evenly across all frames 1–480 (no off-by-one clipping)
+        targetFrame = Math.round(scrollFraction * (frameCount - 1)) + 1;
       }
     };
 
@@ -107,7 +112,7 @@ export default function EyeCanvas() {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-screen z-0 flex justify-center items-center pointer-events-none transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed top-[96px] md:top-[120px] left-0 w-full h-[calc(100vh-96px)] md:h-[calc(100vh-120px)] z-0 flex justify-center items-center pointer-events-none transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
     >
       <canvas ref={canvasRef} className="w-full h-full object-cover"></canvas>
     </div>
