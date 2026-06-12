@@ -1,7 +1,14 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # dependencies
-node_modules/
 /node_modules
-/shadcn/node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # testing
 /coverage
@@ -9,22 +16,26 @@ node_modules/
 # next.js
 /.next/
 /out/
-/shadcn/.next/
-/shadcn/out/
-build/
+
+# production
+/build
 
 # misc
 .DS_Store
 *.pem
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
 .vercel
 
-# heavy assets
-exploded_eye/
+# typescript
+*.tsbuildinfo
+next-env.d.ts
