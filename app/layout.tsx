@@ -22,15 +22,15 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClairvoyAI — Omniscience & Computation",
-  description: "ClairvoyAI by AI Atuariel: Where actuarial intelligence meets computational vision. Hack the future.",
+  title: "Datathon Actuariel National — INSEA Rabat 2026",
+  description: "Vers une clairvoyance algorithmique : l’IA au service du risque actuariel. Compétition actuarielle nationale organisée par Epik Leaders INSEA, en partenariat avec le Cluster Digital Africa — Rabat, Novembre 2026.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): JSX.Element {
   return (
     <html lang="en" suppressHydrationWarning>
       <body

@@ -12,10 +12,11 @@ interface EsotericPanelProps {
   children: React.ReactNode;
 }
 
-export default function EsotericPanel({ id, title, subtitle, alignment, children }: EsotericPanelProps) {
-  const fadeBase = "clairvoy-fade-text opacity-0 translate-y-[40px] transition-all duration-1000 ease-out";
-  
+export default function EsotericPanel({ id, title, subtitle, alignment, children }: EsotericPanelProps): JSX.Element {
   const isLeft = alignment === 'left';
+
+  // Content slides in from the edge the module is anchored to.
+  const dir = isLeft ? "reveal-from-left" : "reveal-from-right";
 
   // Strongly anchor to the extreme edges to prevent obscuring the central canvas
   const containerClasses = cn(
@@ -28,7 +29,7 @@ export default function EsotericPanel({ id, title, subtitle, alignment, children
     : "border-indigo-accent md:rounded-l-xl";
 
   return (
-    <section className="h-[200vh] w-full relative" id={id}>
+    <section className="h-[200vh] w-full relative" id={id} style={{ contain: 'layout paint' }}>
       <div className={containerClasses}>
         
         {/* Maximum constraints on width so it stays strictly in the corners */}
@@ -40,18 +41,18 @@ export default function EsotericPanel({ id, title, subtitle, alignment, children
             isLeft ? "-left-1/2 bg-cyan-600/40" : "-right-1/2 bg-indigo-600/40"
           )} />
 
-          <div className={fadeBase}>
+          <div>
             {subtitle && (
-              <p className="font-mono text-xs md:text-sm text-cyan-400 uppercase tracking-[0.3em] mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">
+              <p className={cn("font-mono text-xs md:text-sm text-cyan-400 uppercase tracking-[0.3em] mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]", "reveal reveal-blur", dir)}>
                 {subtitle}
               </p>
             )}
-            <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-wider leading-[1.15] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-200 to-indigo-300 drop-shadow-[0_0_15px_rgba(124,58,237,0.4)] neon-pulse">
+            <h2 className={cn("font-heading text-3xl md:text-5xl font-bold tracking-wider leading-[1.15] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-200 to-indigo-300 drop-shadow-[0_0_15px_rgba(124,58,237,0.4)] neon-pulse", "reveal reveal-blur reveal-d1", dir)}>
               {title}
             </h2>
           </div>
 
-          <div className={cn("glass-panel glimmer-effect mt-2 overflow-hidden", cardBorderClasses, fadeBase)}>
+          <div className={cn("glass-panel glimmer-effect mt-2 overflow-hidden", cardBorderClasses, "reveal reveal-d2", dir)}>
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-500/0 via-cyan-400/50 to-cyan-500/0"></div>
             <CardContent className="relative z-10 p-8 flex flex-col gap-4 font-sans text-base md:text-lg text-slate-300 drop-shadow-md leading-relaxed">
               {children}
